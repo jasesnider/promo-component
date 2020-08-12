@@ -7,7 +7,7 @@ const PromoComponent = class {
         registerInstance(this, hostRef);
         this.promo = null;
         this.countdown = null;
-        this.countryCode = "us";
+        this.cc = "us";
     }
     formatSingleDigit(time) {
         return time.toString().length === 1 ? `0${time}` : time;
@@ -57,9 +57,9 @@ const PromoComponent = class {
         }, 1000);
     }
     countryCodeChanged(cc) {
-        console.log("prev: ", this._countryCode);
+        console.log("prev: ", this._cc);
         console.log("new: ", cc);
-        this._countryCode = cc;
+        this._cc = cc;
         this.getContent(cc);
     }
     async getContent(cc) {
@@ -73,7 +73,7 @@ const PromoComponent = class {
         }
     }
     componentWillLoad() {
-        this.countryCodeChanged(this.countryCode);
+        this.countryCodeChanged(this.cc);
         this.initCountdown();
     }
     render() {
@@ -81,7 +81,7 @@ const PromoComponent = class {
     }
     static get assetsDirs() { return ["assets"]; }
     static get watchers() { return {
-        "countryCode": ["countryCodeChanged"]
+        "cc": ["countryCodeChanged"]
     }; }
 };
 PromoComponent.style = promoComponentCss;
