@@ -8,7 +8,6 @@ const PromoComponent = class {
         this.promo = null;
         this.countdown = null;
         this.countryCode = "us";
-        this.image = "header_promo.png";
     }
     formatSingleDigit(time) {
         return time.toString().length === 1 ? `0${time}` : time;
@@ -25,7 +24,7 @@ const PromoComponent = class {
         return h("div", { class: "countdown-wrapper" }, timeBlocks);
     }
     initCountdown() {
-        const promoDate = this.promo ? this.promo.date : "Aug 15, 2020 10:37:25";
+        const promoDate = this.promo ? this.promo.date : "Aug 15, 2020 15:37:25";
         const countDownDate = new Date(promoDate).getTime();
         const x = setInterval(() => {
             const now = new Date().getTime();
@@ -57,12 +56,17 @@ const PromoComponent = class {
             this.countdown = this.formatCountDown(timeFragments);
         }, 1000);
     }
-    async onNameChanged(countryCode) {
-        console.log("prev value: ", this._countryCode);
-        console.log("got name: ", countryCode);
-        this._countryCode = countryCode;
+    countryCodeChanged(newValue, oldValue) {
+        if (newValue !== oldValue) {
+            console.log("prev value: ", oldValue);
+            console.log("new value: ", newValue);
+            this.countryCode = newValue;
+            this.getContent();
+        }
+    }
+    async getContent() {
         try {
-            let response = await fetch(`https://cors-anywhere.herokuapp.com/https://csb-yy9im.jasesnider.vercel.app/api/promo?cc=${this._countryCode}`);
+            let response = await fetch(`https://cors-anywhere.herokuapp.com/https://csb-yy9im.jasesnider.vercel.app/api/promo?cc=${this.countryCode}`);
             let json = await response.json();
             this.promo = json;
         }
@@ -71,7 +75,7 @@ const PromoComponent = class {
         }
     }
     componentWillLoad() {
-        this.onNameChanged(this.countryCode);
+        this.getContent();
         this.initCountdown();
     }
     render() {
@@ -79,7 +83,7 @@ const PromoComponent = class {
     }
     static get assetsDirs() { return ["assets"]; }
     static get watchers() { return {
-        "countryCode": ["onNameChanged"]
+        "countryCode": ["countryCodeChanged"]
     }; }
 };
 PromoComponent.style = promoComponentCss;
