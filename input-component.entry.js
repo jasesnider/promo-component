@@ -1,4 +1,4 @@
-import { r as registerInstance, h } from './index-e2f79ebb.js';
+import { r as registerInstance, h } from './index-e8484beb.js';
 
 const inputComponentCss = ":host{display:block}.__input{background-color:aqua}";
 
