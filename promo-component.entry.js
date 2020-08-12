@@ -56,15 +56,9 @@ const PromoComponent = class {
             this.countdown = this.formatCountDown(timeFragments);
         }, 1000);
     }
-    countryCodeChanged(newValue, oldValue) {
-        console.log("prev value: ", oldValue);
+    countryCodeChanged(newValue) {
         console.log("new value: ", newValue);
-        if (newValue !== oldValue) {
-            console.log("prev value: ", oldValue);
-            console.log("new value: ", newValue);
-            this.countryCode = newValue;
-            this.getContent(newValue);
-        }
+        this.getContent(newValue);
     }
     async getContent(cc) {
         try {
@@ -77,7 +71,7 @@ const PromoComponent = class {
         }
     }
     componentWillLoad() {
-        this.getContent("us");
+        this.countryCodeChanged(this.countryCode);
         this.initCountdown();
     }
     render() {
