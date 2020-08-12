@@ -57,16 +57,18 @@ const PromoComponent = class {
         }, 1000);
     }
     countryCodeChanged(newValue, oldValue) {
+        console.log("prev value: ", oldValue);
+        console.log("new value: ", newValue);
         if (newValue !== oldValue) {
             console.log("prev value: ", oldValue);
             console.log("new value: ", newValue);
             this.countryCode = newValue;
-            this.getContent();
+            this.getContent(newValue);
         }
     }
-    async getContent() {
+    async getContent(cc) {
         try {
-            let response = await fetch(`https://cors-anywhere.herokuapp.com/https://csb-yy9im.jasesnider.vercel.app/api/promo?cc=${this.countryCode}`);
+            let response = await fetch(`https://cors-anywhere.herokuapp.com/https://csb-yy9im.jasesnider.vercel.app/api/promo?cc=${cc}`);
             let json = await response.json();
             this.promo = json;
         }
@@ -75,7 +77,7 @@ const PromoComponent = class {
         }
     }
     componentWillLoad() {
-        this.getContent();
+        this.getContent("us");
         this.initCountdown();
     }
     render() {
