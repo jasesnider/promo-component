@@ -56,9 +56,11 @@ const PromoComponent = class {
             this.countdown = this.formatCountDown(timeFragments);
         }, 1000);
     }
-    countryCodeChanged(newValue) {
-        console.log("new value: ", newValue);
-        this.getContent(newValue);
+    countryCodeChanged(cc) {
+        console.log("prev: ", this._countryCode);
+        console.log("new: ", cc);
+        this._countryCode = cc;
+        this.getContent(cc);
     }
     async getContent(cc) {
         try {
