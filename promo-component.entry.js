@@ -24,7 +24,7 @@ const PromoComponent = class {
         return h("div", { class: "countdown-wrapper" }, timeBlocks);
     }
     initCountdown() {
-        const promoDate = this.promo ? this.promo.date : "Sept 6, 2020 04:37:25";
+        const promoDate = this.promo ? this.promo.date : "Sept 11, 2020 04:37:25";
         const countDownDate = new Date(promoDate).getTime();
         const x = setInterval(() => {
             const now = new Date().getTime();
